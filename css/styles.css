@@ -119,24 +119,46 @@
 #wrapcontact {
 	margin:0 auto;
 	padding-top: 100px;
-	width:30%;
+	width:66%;
+	text-align: center;
+}
 
+#wrapcontact a:hover{
+	color: #FFFF00;
+	transition:all 0.1s ease;
 }
 
 #wrapindex {
 
 	margin:0 auto;
 	padding-top: 100px;
-	width:50%;
-
-	
+	width: 66%;
+	text-align: center;
 }
+#wrapindex h1{
+
+}
+
 
 #wraplinks {
 	margin:0 auto;
 	padding-top: 10%;
-	padding-left: 30%;
+	width: 66%;
 
+
+}
+
+#wraplinks a:hover{
+	color: #FFFF00;
+	transition:all 0.1s ease;
+}
+
+#wraplinks h1{
+	text-align: center;
+}
+
+#wraplinks-links {
+	text-align: center;
 }
 
 #wrapmusic {
@@ -166,14 +188,23 @@
 #wrapportfolio {
 	margin:0 auto;
 	padding-top: 100px;
-	width:50%;
+	width:66%;
 
 }
 
 #wrapportfolio iframe{
 	border-style: none;
-	width: 100%;
-	height: 320px;
+	width: 540px;
+	height: 360px;
+}
+
+#wrapportfolio #content{
+	margin:0 auto;
+	width: 66%;
+}
+
+#wrapportfolio #media{
+	text-align: center;
 }
 
 @media screen and (max-width: 900px) {
