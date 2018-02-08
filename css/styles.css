@@ -189,13 +189,13 @@
 	margin:0 auto;
 	padding-top: 100px;
 	width:66%;
-
+	text-align: center;
 }
 
 #wrapportfolio iframe{
 	border-style: none;
-	width: 540px;
-	height: 360px;
+	width: 100%;
+	height: 23.05em;
 }
 
 #wrapportfolio #content{
@@ -216,8 +216,6 @@
 #wrapportfolio ul{
 	margin-left: auto; 
   	margin-right: auto; 
-  	left: 0;
-  	right: 0;
 	width:370px;
 }
 
