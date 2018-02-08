@@ -1,11 +1,10 @@
 
 
-#wrap {
+#wrapgeneric {
 
 	margin:0 auto;
-	padding-top: 50px;
-	padding-left: 10%;
-
+	padding-top: 100px;
+	text-align: center;
 }
 
 #mainnav {
@@ -185,48 +184,48 @@
 
 
 
-#wrapportfolio {
+#wrap-portfolio {
 	margin:0 auto;
 	padding-top: 100px;
 	width:66%;
 	text-align: center;
 }
 
-#wrapportfolio iframe{
+#wrap-portfolio iframe{
 	border-style: none;
 	width: 100%;
 	height: 30em;
 }
 
-#wrapportfolio #content{
+#wrap-portfolio #content{
 	margin:0 auto;
 	width: 66%;
 }
 
-#wrapportfolio #media{
+#wrap-portfolio #media{
 	text-align: center;
 }
 
 @media screen and (max-width: 900px) {
-    #wrapportfolio iframe {
+    #wrap-portfolio iframe {
         height: 300px;
     }
 }
 
-#wrapportfolio ul{
+#wrap-portfolio ul{
 	margin-left: auto; 
   	margin-right: auto; 
 	width:370px;
 }
 
 @media screen and (max-width: 900px) {
-    #wrapportfolio ul{
+    #wrap-portfolio ul{
     	padding-left: 5%;
 		width:100%;
 	}     
 }
 
-#wrapportfolio li{
+#wrap-portfolio li{
 
 	list-style: none;
 	float: left;
@@ -239,12 +238,12 @@
 }
 
 @media screen and (max-width: 900px) {
-    #wrapportfolio li{
+    #wrap-portfolio li{
 		width: 80px;
 	}     
 }
 
-#wrapportfolio li h2:hover{
+#wrap-portfolio li h2:hover{
 	box-shadow: inset 0 0 0 10px #FFFF00;
 	transition:all 0.3s ease;
 }
@@ -266,14 +265,14 @@
 
 }
 
-#wrapportfolio img {
+#wrap-portfolio img {
 	width: 70%;
 	height: 35%;
 
 }
 
 @media screen and (max-width: 900px) {
-    #wrapportfolio img{
+    #wrap-portfolio img{
 
 		width: 30%;
 		height: 15%;
