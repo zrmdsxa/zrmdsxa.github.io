@@ -1,10 +1,10 @@
 
 
-#wrapgeneric {
+#wrap-generic {
 
 	margin:0 auto;
 	padding-top: 100px;
-	text-align: center;
+	width: 33%;
 }
 
 #mainnav {
@@ -92,6 +92,10 @@
 
 .ml {
 	background-color: #FFFF00;
+}
+
+.centertext{
+	text-align: center;
 }
 
 
