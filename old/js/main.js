@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	dBug("Document is ready");
-	$('#sidenav').load("html/navbar.html");
+	$('#mainnav').load("html/navbar.html");
 	dBug("navbar loaded");
 
 	function dBug(data){
