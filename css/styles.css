@@ -147,12 +147,13 @@
 
     .sidenav{
         width: 350px;
+        font-size:;
     }
     
 
     .sidenav h1 {
         text-decoration: none;
-        /*font-size: 1.5em;*/
+        font-size: 2em;
         color: #FFFFFF;
         display: block;
     
@@ -160,12 +161,16 @@
 
     .sidenav h2 {
         text-decoration: none;
-        /*font-size: 1em;*/
+        font-size: 2em;
         color: #FFFFFF;
         display: block;
     }
     .sidenav a {
-        /*font-size: 1em;*/
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        font-size: 2em;
+
     }
 
 
