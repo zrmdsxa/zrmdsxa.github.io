@@ -24,4 +24,3 @@ function MenuToggle(x) {
     	menu = true;
     }
 }
-
