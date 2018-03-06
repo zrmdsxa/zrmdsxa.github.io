@@ -169,11 +169,16 @@
         padding-top: 12px;
         padding-bottom: 12px;
 
-        font-size: 2em;
+        font-size: 2.5em;
 
     }
 
-
+    .bar1, .bar2, .bar3{
+        width: 35px;
+        height: 5px;
+        background-color: white;
+        margin: 6px 0;
+    }
 
 }
 
