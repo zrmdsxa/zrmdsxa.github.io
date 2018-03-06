@@ -17,10 +17,12 @@ function MenuToggle(x) {
 
     if (menu){
     	document.getElementById("sidenav").style.left = "-240px";
+    	document.getElementById("sidenav").style.textAlign = "left";
     	menu = false;
     }
     else{
     	document.getElementById("sidenav").style.left = "0px";
+    	document.getElementById("sidenav").style.textAlign = "center";
     	menu = true;
     }
 }
