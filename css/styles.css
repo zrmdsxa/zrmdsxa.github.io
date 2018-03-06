@@ -4,11 +4,12 @@
     position: fixed;
     z-index: 1;
     top: 0;
-    left: 0;
+    left: -240px;
     background-color: rgba(0,205,255,1);
     overflow-x: hidden;
     padding-top: 20px;
     text-align: center;
+    transition: 0.5s;
 }
 
 .sidenav h1 {
@@ -61,6 +62,38 @@
     }
 }
 
+.menu {
+    padding-left: 240px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+    transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+    transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
 .width66 {
     width:66%;
     margin: 0 auto;
@@ -74,8 +107,12 @@
     text-align: left;
 }
 
+.right {
+    text-align: right;
+}
+
 .main {
-    margin-left: 300px; /* Same as the width of the sidenav */
+    margin-left: 60px;
     font-size: 28px; 
     padding: 50px 50px;
 }
