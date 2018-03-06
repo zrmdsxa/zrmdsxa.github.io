@@ -18,11 +18,13 @@ function MenuToggle(x) {
     if (menu){
     	document.getElementById("sidenav").style.left = "-240px";
     	document.getElementById("sidenav").style.textAlign = "left";
+    	document.getElementById("main").style.marginLeft = "110px";
     	menu = false;
     }
     else{
     	document.getElementById("sidenav").style.left = "0px";
     	document.getElementById("sidenav").style.textAlign = "center";
+    	document.getElementById("main").style.marginLeft = "350px";
     	menu = true;
     }
 }

@@ -98,9 +98,10 @@
 }
 
 .main {
-    margin-left: 60px;
+    margin-left: 110px;
     font-size: 28px; 
     padding: 50px 50px;
+    transition: 0.5s;
 }
 
 .work{
