@@ -28,7 +28,7 @@
 }
 
 .sidenav a {
-    padding: 6px 8px 6px 16px;
+    padding: 6px 0px 6px 0px;
     font-size: 1.5em;
     color: #FFFFFF;
     display: block;
@@ -38,28 +38,11 @@
     color: #FFFF00;
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        width: 250px;
-    }
-
-    .sidenav h1 {
-        text-decoration: none;
-        font-size: 2em;
-        color: #FFFFFF;
-        display: block;
-    
-    }
-
-    .sidenav h2 {
-        text-decoration: none;
-        font-size: 1.5em;
-        color: #FFFFFF;
-        display: block;
-    }
-    .sidenav a {
-        font-size: 1em;
-    }
+.sidenav img{
+    margin-left:6px; 
+    left:10px;
+    width:64px;
+    height:64px;
 }
 
 .menu {
@@ -153,10 +136,6 @@
 
     .main {
         margin-left: 200px;
-    }
-
-    .sidenav {
-        width: 200px;
     }
 
     .sidenav h1 {
