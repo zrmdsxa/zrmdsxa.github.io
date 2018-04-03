@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 360,
-    height: 640,
+    width: window.innerWidth * window.devicePixelRatio,
+    height: window.innerHeight * window.devicePixelRatio,
     physics: {
     	default: 'arcade',
     	arcade: {
@@ -19,10 +19,12 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+var background;
 var topbar;
 var ball;
 var paddle;
 var text;
+var scaleRatio = window.devicePixelRatio / 3;
 
 function preload ()
 {
@@ -38,9 +40,11 @@ function preload ()
 
 function create ()
 {
-
+	console.log(scaleRatio);
 	//background
-	this.add.image(400, 340, 'sky');
+	background = this.add.image(400, 340, 'sky');
+	console.log(background);
+	background.scaleX = scaleRatio;
 
 	//top bar
 	topbar = this.physics.add.staticGroup();
