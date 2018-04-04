@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: window.innerWidth * window.devicePixelRatio,
-    height: window.innerHeight * window.devicePixelRatio,
+    width: window.innerWidth,//360,
+    height: window.innerHeight,//640,
     physics: {
     	default: 'arcade',
     	arcade: {
@@ -19,55 +19,80 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+var devicePixelRatio;
+
 var background;
 var topbar;
 var ball;
 var paddle;
 var text;
-var scaleRatio = window.devicePixelRatio / 3;
+var brick;
 
+var brickGroup;
 function preload ()
 {
+
 	 this.load.image('sky', 'images/sky.png');
 	 this.load.image('top', 'images/top.png');
 	 this.load.image('brick', 'images/yellowbrick.png');
 	 this.load.image('ball', 'images/ball.png');
 	 this.load.image('paddle', 'images/paddle.png');
 	 console.log("sky loaded");
+
+	 console.log("w:"+window.innerWidth+" h:"+window.innerHeight);
+	 devicePixelRatio = window.devicePixelRatio;
+	 console.log("dpr:"+devicePixelRatio);
 }
 
 
 
 function create ()
 {
-	console.log(scaleRatio);
+	
+	
 	//background
-	background = this.add.image(400, 340, 'sky');
-	console.log(background);
-	background.scaleX = scaleRatio;
+	background = this.add.image(window.innerWidth/2, window.innerHeight/2, 'sky');
+	background.setScale(devicePixelRatio*4,devicePixelRatio*2);
 
 	//top bar
-	topbar = this.physics.add.staticGroup();
-	topbar.create(180,20,'top');
+	topbar = this.physics.add.image(window.innerWidth/2,20 *devicePixelRatio,'top');
+	topbar.setScale(devicePixelRatio*10,devicePixelRatio*2);
+	topbar.body.immovable = true;
+
 
 	//bricks
-	this.add.image(180, 200, 'brick');
+	brickGroup = this.physics.add.staticGroup();
+	for (var i = 0; i < 5;i++){
+		for (var j = 0; j < 5; j++){
+			brick = brickGroup.create( window.innerWidth/2 + (i*40*devicePixelRatio - (80*devicePixelRatio)),(devicePixelRatio * 100) +(30*devicePixelRatio * j), 'brick');
+			brick.setScale(devicePixelRatio,devicePixelRatio);
+		}
+		
+		
+	}
+	
+
+
+	//brickGroup.add(brick);
 
 	//ball
-	ball = this.physics.add.image(180, 550, 'ball');
+	ball = this.physics.add.image(window.innerWidth/2, window.innerHeight - (95 * devicePixelRatio), 'ball');
 	ball.setBounce(1.0);
 	ball.setCollideWorldBounds(true);
-	ball.body.setVelocityY(300);
+	ball.body.setVelocityY(300 * devicePixelRatio);
+	ball.setScale(devicePixelRatio,devicePixelRatio);
 
 	//paddle
-	paddle = this.physics.add.image(180, 600, 'paddle');
+	paddle = this.physics.add.image(window.innerWidth/2, window.innerHeight - (40 * devicePixelRatio) , 'paddle');
 	paddle.setCollideWorldBounds(true);
 	paddle.body.immovable = true;
+	paddle.setScale(devicePixelRatio,devicePixelRatio);
 
 	this.physics.add.collider(ball, topbar);
 
-	//this.physics.add.overlap(paddle,ball,hitBall,null,this,false);
 	this.physics.add.collider(paddle,ball,hitBall,null,this);
+
+	this.physics.add.collider(brickGroup,ball,hitBrick,null,this);
 	//text = this.add.text(9, 9, 'test:x', { font: "20px Arial", fill: "#ffffff", align: "left" });
 
 }
@@ -77,11 +102,11 @@ function update ()
 	if (this.input.activePointer.isDown){
 		//console.log(this.input.x);
 		if (this.input.x <= paddle.x){
-			paddle.body.setVelocityX(-250);
+			paddle.body.setVelocityX(-250 * devicePixelRatio);
 			//console.log("left");
 		}	
 		else {
-			paddle.body.setVelocityX(250);
+			paddle.body.setVelocityX(250 * devicePixelRatio);
 			//console.log("right");
 		}
 		
@@ -93,9 +118,15 @@ function update ()
 
 function hitBall (paddle,ball){
 	console.log("hitball");
-	console.log(ball.body);
+
 	//console.log(ball);
 	var x = paddle.x - ball.x;
-	x *= 5;
+	x *= 10;
 	ball.body.setVelocityX(-x);
+}
+
+function hitBrick(ball,brick){
+	console.log(brick);
+	console.log(ball);
+	brick.disableBody(true,true);
 }
