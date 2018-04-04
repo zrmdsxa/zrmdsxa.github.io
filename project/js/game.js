@@ -61,15 +61,23 @@ function create ()
 
 
 	//bricks
-	brickGroup = this.physics.add.staticGroup();
+	//brickGroup = this.physics.add.staticGroup();
+	brickGroup = this.physics.add.group();
+	console.log(brickGroup);
 	for (var i = 0; i < 5;i++){
 		for (var j = 0; j < 5; j++){
-			brick = brickGroup.create( window.innerWidth/2 + (i*40*devicePixelRatio - (80*devicePixelRatio)),(devicePixelRatio * 100) +(30*devicePixelRatio * j), 'brick');
-			brick.setScale(devicePixelRatio,devicePixelRatio);
+			//brick = brickGroup.create( window.innerWidth/2 + (i*50*devicePixelRatio - (100*devicePixelRatio)),(devicePixelRatio * 100) +(26*devicePixelRatio * j), 'brick');
+			brick = this.physics.add.image(window.innerWidth/2 + (i*50*devicePixelRatio - (100*devicePixelRatio)),(devicePixelRatio * 100) +(26*devicePixelRatio * j), 'brick');
+			brick.setScale(devicePixelRatio * 1.5,devicePixelRatio * 1.5);
+			//brick.body.immovable = true;
+			brickGroup.add(brick);
 		}
 		
 		
 	}
+	brickGroup.children.iterate(function (child){
+		child.body.immovable = true;
+	});
 	
 
 
@@ -126,7 +134,6 @@ function hitBall (paddle,ball){
 }
 
 function hitBrick(ball,brick){
-	console.log(brick);
-	console.log(ball);
-	brick.disableBody(true,true);
+	//brick.disableBody(true,true);
+	brick.destroy();
 }
