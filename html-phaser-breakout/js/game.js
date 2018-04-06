@@ -40,6 +40,8 @@ var ballStartY;
 var paddleMinX;
 var paddleMaxX;
 
+var sideX = 180;
+
 var paddleSpeed = 300;
 
 function preload ()
@@ -71,8 +73,8 @@ function create ()
 
 	//sides
 	sides = this.physics.add.staticGroup();
-	sides.create((window.innerWidth/2)-(195 * devicePixelRatio),window.innerHeight/2,'sides').setScale(devicePixelRatio*2,devicePixelRatio*10).refreshBody();
-	sides.create((window.innerWidth/2)+(195 * devicePixelRatio)-(5*devicePixelRatio),window.innerHeight/2,'sides').setScale(devicePixelRatio*2,devicePixelRatio*10).refreshBody();
+	sides.create((window.innerWidth/2)-(sideX * devicePixelRatio),window.innerHeight/2,'sides').setScale(devicePixelRatio*2,devicePixelRatio*10).refreshBody();
+	sides.create((window.innerWidth/2)+(sideX * devicePixelRatio)-(2*devicePixelRatio),window.innerHeight/2,'sides').setScale(devicePixelRatio*2,devicePixelRatio*10).refreshBody();
 
 	var testSide = this.add.image(0,0,'sides');
 	testSide.setScale(devicePixelRatio*2,devicePixelRatio*10);
@@ -134,8 +136,8 @@ function create ()
 	paddle.body.immovable = true;
 	paddle.setScale(devicePixelRatio,devicePixelRatio);
 
-	paddleMinX = (window.innerWidth/2)-(195 * devicePixelRatio) + half + (paddle.width/2 * devicePixelRatio);
-	paddleMaxX = (window.innerWidth/2)+(195 * devicePixelRatio)-(2*devicePixelRatio) - half - (paddle.width/2 * devicePixelRatio);
+	paddleMinX = (window.innerWidth/2)-(sideX * devicePixelRatio) + half + (paddle.width/2 * devicePixelRatio);
+	paddleMaxX = (window.innerWidth/2)+(sideX * devicePixelRatio)-(2*devicePixelRatio) - half - (paddle.width/2 * devicePixelRatio);
 
 	console.log(ball.x);
 	console.log(paddle.x);
@@ -173,24 +175,24 @@ function update ()
 
 		//console.log(this.input.x - paddle.x);
 		if (this.input.x <= paddle.x){
-			if ((this.input.x - paddle.x) > -5){
+			if ((this.input.x - paddle.x) > -17){
 				paddle.body.setVelocityX(0);
 				paddle.x = this.input.x;
 				
 			}
 			else {
-				paddle.body.setVelocityX(-250 * devicePixelRatio);
+				paddle.body.setVelocityX(-paddleSpeed * devicePixelRatio);
 			}
 			//console.log("left");
 		}	
 		else {
-			if ((this.input.x - paddle.x) < 5){
+			if ((this.input.x - paddle.x) < 17){
 				paddle.body.setVelocityX(0);
 				paddle.x = this.input.x;
 				
 			}
 			else {
-				paddle.body.setVelocityX(250 * devicePixelRatio);
+				paddle.body.setVelocityX(paddleSpeed * devicePixelRatio);
 			}
 			//console.log("right");
 		}
