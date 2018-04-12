@@ -29,10 +29,14 @@ var sides;
 var ball;
 var paddle;
 var scoreText;
+var tapStartText;
+var finalScoreText;
 
 var brickGroup;
 var remainingBricks;
 var startBall;
+var startGame;
+var endGame;
 
 var ballStartX;
 var ballStartY;
@@ -103,11 +107,12 @@ function create ()
 	//bricks
 	//brickGroup = this.physics.add.staticGroup();
 	brickGroup = this.physics.add.group();
+	remainingBricks	= 0;
 	console.log(brickGroup);
 	for (var i = 0; i < 5;i++){
-		for (var j = 0; j < 5; j++){
+		for (var j = 0; j < 10; j++){
 			//					the horizontal spacing between bricks (i*x*dPR), shift should be 2x spacing (2x*dPR)
-			brick = this.physics.add.image(window.innerWidth/2 + (i*50*devicePixelRatio - (100*devicePixelRatio)),(devicePixelRatio * 100) +(26*devicePixelRatio * j), 'brick');
+			brick = this.physics.add.image(window.innerWidth/2 + (i*50*devicePixelRatio - (100*devicePixelRatio)),(devicePixelRatio * 90) +(26*devicePixelRatio * j), 'brick');
 			brick.setScale(devicePixelRatio * 1.5,devicePixelRatio * 1.5);
 			brickGroup.add(brick);
 			remainingBricks++;
@@ -159,9 +164,15 @@ function create ()
 
 
 	scoreText = this.add.text(9, 9, 'Score: 0', { font: 20 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "left" });
-
+	tapStartText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Tap to Start', { font: 30 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "left" });
+	tapStartText.setOrigin(0.5,0); //the align option doesnt even work
+	finalScoreText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Your Score: -1', { font: 30 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "center" });
+	finalScoreText.setOrigin(0.5,0);
+	finalScoreText.visible = false;
 	score = 0;
 	startBall = true;
+	startGame = true;
+	endGame	= false;
 
 	//ball.body.setVelocityY(300 * devicePixelRatio);
 	
@@ -172,10 +183,10 @@ function create ()
 function update ()
 {
 	if (this.input.activePointer.isDown){
-
+		
 		//console.log(this.input.x - paddle.x);
 		if (this.input.x <= paddle.x){
-			if ((this.input.x - paddle.x) > -17){
+			if ((this.input.x - paddle.x) > (-7*devicePixelRatio)){
 				paddle.body.setVelocityX(0);
 				paddle.x = this.input.x;
 				
@@ -186,7 +197,7 @@ function update ()
 			//console.log("left");
 		}	
 		else {
-			if ((this.input.x - paddle.x) < 17){
+			if ((this.input.x - paddle.x) < (7*devicePixelRatio)){
 				paddle.body.setVelocityX(0);
 				paddle.x = this.input.x;
 				
@@ -227,6 +238,13 @@ function update ()
 		paddle.x = paddleMaxX;
 	}
 
+	if(ball.x < 0){
+		ball.x = window.innerWidth/4
+	}
+	else if(ball.x > window.innerWidth){
+		ball.x = window.innerWidth/1.333
+	}
+
 	if(startBall){
 		paddle.x = ballStartX;
 		ball.x = ballStartX;
@@ -248,7 +266,18 @@ function hitBrick(ball,brick){
 	score += 1;
 	scoreText.setText('Score: '+score);
 	remainingBricks--;
-	brick.destroy();
+	//brick.destroy();
+	brick.disableBody(true,true);
+
+		console	.log(remainingBricks);
+	if(remainingBricks == 0){
+		finalScoreText.visible = true;
+		finalScoreText.setText('Your score: '+score);
+		ball.body.setVelocityX(0);
+		ball.body.setVelocityY(0);
+
+		endGame	= true;
+	}
 
 }
 
@@ -258,5 +287,29 @@ function onPointerDown(pointer, gameObjects){
 		startBall = false;
 
 		ball.body.setVelocityY(300 * devicePixelRatio);
+	}
+	if (startGame){
+		startGame = false;
+		tapStartText.visible = false;
+	}
+	if (endGame){
+		startBall = true;
+		startGame = true;
+		endGame	= false;
+
+		tapStartText.visible = true;
+		finalScoreText.visible = false;
+		score = 0;
+		scoreText.setText('Score: '+score);
+
+		ball.x = ballStartX;
+		ball.y = ballStartY;
+
+		brickGroup.children.each(function (brick) {
+
+            brick.enableBody(false, 0, 0, true, true);
+            remainingBricks++;
+
+        });
 	}
 }
