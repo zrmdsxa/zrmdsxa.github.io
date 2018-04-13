@@ -91,7 +91,8 @@ function preload ()
 	 this.load.audio('wallhit', 'sound/wallhit.mp3');
 	 this.load.audio('brickhit', 'sound/brickhit.mp3');
 	 this.load.audio('loseball', 'sound/loseball.mp3');
-	 this.load.audio('music', 'sound/music.mp3');
+	 //this.load.audio('music', 'sound/music.mp3');
+	 this.load.audio('music', 'sound/musicmed.mp3');
 }
 
 
@@ -190,7 +191,7 @@ function create ()
 	this.input.on('pointerdown',onPointerDown,this);
 
 	music = this.sound.add('music');
-	music.volume = 0.1;
+	music.volume = 0.3;
 	music.loop = true;
 	music.play();
 	console.log(music);
