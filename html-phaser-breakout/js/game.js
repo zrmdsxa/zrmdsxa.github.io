@@ -48,8 +48,32 @@ var sideX = 180;
 
 var paddleSpeed = 300;
 
+var music;
+var paddlehit;
+var wallhit;
+var brickhit;
+var loseball;
+
 function preload ()
 {
+	var loadingText = this.add.text(window.innerWidth/2, window.innerHeight/2.3, 'Loading', { font: 30 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "center" });
+	loadingText.setOrigin(0.5,0);
+
+	var progress = this.add.graphics();
+
+    this.load.on('progress', function (value) {
+
+        progress.clear();
+        progress.fillStyle(0xffffff, 1);
+        progress.fillRect(0, window.innerHeight/2, 800 * value, 60);
+
+    });
+
+    this.load.on('complete', function () {
+
+        progress.destroy();
+
+    });
 
 	 this.load.image('sky', 'images/sky.png');
 	 this.load.image('top', 'images/top.png');
@@ -57,11 +81,17 @@ function preload ()
 	 this.load.image('brick', 'images/yellowbrick.png');
 	 this.load.image('ball', 'images/ball.png');
 	 this.load.image('paddle', 'images/paddle.png');
-	 console.log("sky loaded");
+	 console.log("images loaded");
 
 	 console.log("w:"+window.innerWidth+" h:"+window.innerHeight);
 	 devicePixelRatio = window.devicePixelRatio;
 	 console.log("dpr:"+devicePixelRatio);
+
+	 this.load.audio('paddlehit', 'sound/paddlehit.mp3');
+	 this.load.audio('wallhit', 'sound/wallhit.mp3');
+	 this.load.audio('brickhit', 'sound/brickhit.mp3');
+	 this.load.audio('loseball', 'sound/loseball.mp3');
+	 this.load.audio('music', 'sound/music.mp3');
 }
 
 
@@ -69,11 +99,10 @@ function preload ()
 function create ()
 {
 	
+
 	//background
 	background = this.add.image(window.innerWidth/2, window.innerHeight/2, 'sky');
 	background.setScale(devicePixelRatio*4,devicePixelRatio*2);
-
-	
 
 	//sides
 	sides = this.physics.add.staticGroup();
@@ -86,18 +115,6 @@ function create ()
 	var half = testSide.width * devicePixelRatio;
 	console.log(half);
 	testSide.destroy();
-	//var half = testSide
-	
-	//leftbar = this.physics.add.image((window.innerWidth/2)-(195 * devicePixelRatio),window.innerHeight/2,'sides');
-	//leftbar.setScale(devicePixelRatio*2,devicePixelRatio*10);
-	//leftbar.body.immovable = true;
-
-	//rightbar = this.physics.add.image((window.innerWidth/2)+(195 * devicePixelRatio)-(2*devicePixelRatio),window.innerHeight/2,'sides');
-	//rightbar.setScale(devicePixelRatio*2,devicePixelRatio*10);
-	//rightbar.body.immovable = true;
-
-	//sides.add(leftbar);
-	//sides.add(rightbar);
 
 	//top bar
 	topbar = this.physics.add.image(window.innerWidth/2,20 *devicePixelRatio,'top');
@@ -131,9 +148,9 @@ function create ()
 	ballStartY = window.innerHeight - (95 * devicePixelRatio);
 	ball = this.physics.add.image(ballStartX, ballStartY, 'ball');
 	ball.setBounce(1.0);
-	//ball.setCollideWorldBounds(true);
-	//
-	ball.setScale(devicePixelRatio * 0.8,devicePixelRatio * 0.8);
+
+	var ballSize = 0.5;
+	ball.setScale(devicePixelRatio * ballSize,devicePixelRatio * ballSize);
 
 	//paddle
 	paddle = this.physics.add.image(window.innerWidth/2, window.innerHeight - (40 * devicePixelRatio) , 'paddle');
@@ -149,13 +166,9 @@ function create ()
 	console.log(window.innerWidth/2);
 
 	//collision detections
-	//this.physics.add.collider(paddle, leftbar);
-	//this.physics.add.collider(paddle, rightbar);
 
-	this.physics.add.collider(ball, topbar);
-	//this.physics.add.collider(ball, leftbar);
-	//this.physics.add.collider(ball, rightbar);
-	this.physics.add.collider(ball, sides);
+	this.physics.add.collider(ball, topbar, hitWall);
+	this.physics.add.collider(ball, sides, hitWall);
 	this.physics.add.collider(paddle, sides);
 
 	this.physics.add.collider(paddle,ball,hitBall,null,this);
@@ -173,17 +186,35 @@ function create ()
 	startBall = true;
 	startGame = true;
 	endGame	= false;
-
-	//ball.body.setVelocityY(300 * devicePixelRatio);
 	
 	this.input.on('pointerdown',onPointerDown,this);
-	//this.input.onTap.add(this.onTap,this);
+
+	music = this.sound.add('music');
+	music.volume = 0.1;
+	music.loop = true;
+	music.play();
+	console.log(music);
+
+	paddlehit = this.sound.add('paddlehit');
+	//paddlehit.volume = 0.1;
+
+	wallhit = this.sound.add('wallhit');
+	//music.volume = 0.1;
+
+	brickhit = this.sound.add('brickhit');
+	//music.volume = 0.1;
+
+	loseball = this.sound.add('loseball');
+
+	//testing ball going through side walls
+	//this.add.image((window.innerWidth/2)-(sideX * devicePixelRatio)+ (40 * devicePixelRatio),window.innerHeight/2,'ball');
+	//this.add.image((window.innerWidth/2)+(sideX * devicePixelRatio)- (40 * devicePixelRatio),window.innerHeight/2,'ball');
 }
 
 function update ()
 {
 	if (this.input.activePointer.isDown){
-		
+
 		//console.log(this.input.x - paddle.x);
 		if (this.input.x <= paddle.x){
 			if ((this.input.x - paddle.x) > (-7*devicePixelRatio)){
@@ -216,6 +247,7 @@ function update ()
 
 
 	if(ball.y >= window.innerHeight){
+		loseball.play();
 		startBall = true;
 
 		ball.body.setVelocityX(0);
@@ -238,11 +270,11 @@ function update ()
 		paddle.x = paddleMaxX;
 	}
 
-	if(ball.x < 0){
-		ball.x = window.innerWidth/4
+	if(ball.x < (window.innerWidth/2)-(sideX * devicePixelRatio) + (40 * devicePixelRatio)){
+		ball.x = (window.innerWidth/2)-(sideX * devicePixelRatio) + (45 * devicePixelRatio);
 	}
-	else if(ball.x > window.innerWidth){
-		ball.x = window.innerWidth/1.333
+	else if(ball.x > (window.innerWidth/2)+(sideX * devicePixelRatio) - (45 * devicePixelRatio)){
+		ball.x = (window.innerWidth/2)+(sideX * devicePixelRatio) - (45 * devicePixelRatio);
 	}
 
 	if(startBall){
@@ -255,6 +287,7 @@ function update ()
 
 function hitBall (paddle,ball){
 	console.log("hitball");
+	paddlehit.play();
 
 	//console.log(ball);
 	var x = paddle.x - ball.x;
@@ -263,11 +296,12 @@ function hitBall (paddle,ball){
 }
 
 function hitBrick(ball,brick){
+	brickhit.play();
 	score += 1;
 	scoreText.setText('Score: '+score);
 	remainingBricks--;
 	//brick.destroy();
-	brick.disableBody(true,true);
+	brick.disableBody(true,true); //hides the bricks
 
 		console	.log(remainingBricks);
 	if(remainingBricks == 0){
@@ -279,6 +313,12 @@ function hitBrick(ball,brick){
 		endGame	= true;
 	}
 
+}
+
+
+function hitWall(){
+	console.log("hit wall");
+	wallhit.play();
 }
 
 function onPointerDown(pointer, gameObjects){
