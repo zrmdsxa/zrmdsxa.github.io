@@ -81,6 +81,7 @@ function preload ()
 	 this.load.image('brick', 'images/yellowbrick.png');
 	 this.load.image('ball', 'images/ball.png');
 	 this.load.image('paddle', 'images/paddle.png');
+	 this.load.image('image', 'images/image.png');
 	 console.log("images loaded");
 
 	 console.log("w:"+window.innerWidth+" h:"+window.innerHeight);
@@ -104,6 +105,9 @@ function create ()
 	//background
 	background = this.add.image(window.innerWidth/2, window.innerHeight/2, 'sky');
 	background.setScale(devicePixelRatio*4,devicePixelRatio*2);
+
+	var image = this.add.image(window.innerWidth/2, (devicePixelRatio * 310), 'image');
+	image.setScale(0.44 * devicePixelRatio, 0.44 * devicePixelRatio);
 
 	//sides
 	sides = this.physics.add.staticGroup();
@@ -178,9 +182,9 @@ function create ()
 
 
 	scoreText = this.add.text(9, 9, 'Score: 0', { font: 20 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "left" });
-	tapStartText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Tap to Start', { font: 30 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "left" });
+	tapStartText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Tap to Start', { font: 30 * devicePixelRatio+"px Arial", fill: "#000000", align: "left" });
 	tapStartText.setOrigin(0.5,0); //the align option doesnt even work
-	finalScoreText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Your Score: -1', { font: 30 * devicePixelRatio+"px Arial", fill: "#ffffff", align: "center" });
+	finalScoreText = this.add.text(window.innerWidth/2, window.innerHeight/1.333, 'Your Score: -1', { font: 30 * devicePixelRatio+"px Arial", fill: "#000000", align: "center" });
 	finalScoreText.setOrigin(0.5,0);
 	finalScoreText.visible = false;
 	score = 0;
