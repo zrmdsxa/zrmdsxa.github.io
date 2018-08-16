@@ -104,6 +104,10 @@
     transition: 0.5s;
 }
 
+.main h1{
+    padding-bottom: 100px;
+}
+
 .work{
     margin-bottom: 100px;
 }
