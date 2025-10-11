@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>Twitch Stream</title>
+	</head>
+  <body>
+    <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+	<div id="a"></div>
+	<script type="text/javascript">
+  		var options = {
+    			width: 640,
+    			height: 480,
+    			channel: "nue_owo",
+    			// only needed if your site is also embedded on embed.example.com and othersite.example.com
+    			parent: ["zrmdsxa.github.io"]
+  		};
+  		var player = new Twitch.Player("a", options);
+  		player.setVolume(0.5);
+	</script>
+  </body>
+</html>
